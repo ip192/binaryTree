@@ -27,7 +27,6 @@ function clone(tree) {
 let newTree = clone(tree);
 
 tree.key = 22;
-
 console.log(JSON.stringify(tree));
 
 
