@@ -37,8 +37,8 @@ function createBinaryTree(arr) {
   return root;
 }
 
-let arr = [8, 2, 5, 3, 9, 11, 32, 7];
+let arr = [8, 2, 5, 3, 10,9, 13, 11, 32, 7];
 
 let tree = new createBinaryTree(arr);
 
-console.log(tree);
+module.exports = createBinaryTree;
