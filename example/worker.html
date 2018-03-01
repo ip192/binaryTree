@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="textcml; charset=utf-8">
+    <title>无标题文档</title>
+</head>
+<body>
+起始值:<input type="text" id="start" name="start"/><br>
+结束值:<input type="text" id="end" name="end"/><br>
+个数:<input type="text" id="count"/><br>
+<input type="button" value="计算" onClick="cal()"/>
+<table id="show" style="border:2px solid gray;background:#ccc"></table>
+<script type="text/javascript">
+  var cal=function(){
+    var start=parseInt(document.getElementById('start').value);
+    var end=parseInt(document.getElementById('end').value);
+    if(start>=end){
+      return;
+    }
+    var cal=new Worker('js/worker2.js');//使用worker来启动多线程
+    var data={start:start,end:end,count:count};
+    cal.postMessage(JSON.stringify({
+      data: data,
+    }));
+    cal.onmessage=function(event){
+      var table=document.getElementById('show');
+      table.innerHTML='';
+      var result=event.data;
+      var nums=result.split(',');
+      var COLS_NUM=8;
+      for(var i=0;i<=(nums.length-1)/COLS_NUM;i++){
+        var row=table.insertRow(i);
+        for(var j=0;j<COLS_NUM&&j*COLS_NUM+j<nums.length-1;j++){
+          row.insertCel(j).innerHTML=nums[i*COLS_NUM+j];
+        }
+      }
+    }
+  };
+</script>
+</body>
+<html>

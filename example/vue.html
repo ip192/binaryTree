@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <div>
+        <input type="text" v-model="txt">
+        <button @click="pushTip(txt)">发表</button></div>
+    <ul>
+        <li v-for="(tip, index) in tipList">
+            <div>
+                <span v-show="!tip.active">{{tip.value}}</span>
+                <input type="text" v-show="tip.active" v-model="tip.value">
+                <button @click="forward(tip, index)">前移</button>
+                <button @click="after(tip, index)">后移</button>
+                <button @click="remove(tip, index)">删除</button>
+                <button @click="edit(tip)">{{editText}}</button>
+            </div>
+        </li>
+
+    </ul>
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.5.13/vue.js"></script>
+<script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return {
+          txt: '',
+          tipList: [],
+          editText: '编辑'
+        }
+      },
+      methods: {
+        pushTip: function(txt) {
+          this.tipList.push({
+            value: txt,
+            active: false
+          });
+        },
+        forward: function(tip, index) {
+          if (index > 0) {
+            this.tipList.splice(index, 1);
+            this.tipList.splice(index - 1, 0, tip);
+          }
+        },
+        after: function(tip, index) {
+          if (index < this.tipList.length - 1) {
+            this.tipList.splice(index, 1);
+            this.tipList.splice(index + 1, 0, tip);
+          }
+        },
+        remove: function(tip, index) {
+          this.tipList.splice(index, 1);
+        },
+        edit: function(tip) {
+          tip.active = !tip.active;
+          this.editText = tip.active ? '完成' : '编辑';
+        },
+      }
+    });
+</script>
+</body>
+</html>

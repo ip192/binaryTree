@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>hello
+<button>click</button></div>
+<script>
+    var div = document.querySelector('div');
+
+    var a = true;
+    function fn() {
+      a ? this.style.background = 'red' : this.style.background = '#fff';
+      a = !a;
+    }
+    div.addEventListener('click', fn);
+</script>
+</body>
+</html>
